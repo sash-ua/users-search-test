@@ -1,0 +1,15 @@
+.DS_Store
+.idea
+
+/schemas
+*/node_modules
+node_modules
+*/dist
+*/.next
+*/uploads
+
+.venv
+.chroma
+
+.codex
+

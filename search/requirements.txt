@@ -1,0 +1,15 @@
+# Runtime dependencies for the search (Python) package
+# Install with: pip install -r search/requirements.txt
+
+# Vector store
+chromadb>=0.4
+
+# OpenAI-compatible embeddings client (new v1 API)
+openai>=1.0.0
+
+# Environment variable loader (.env)
+python-dotenv>=1.0.0
+
+# Data models and validation (v2 APIs used)
+pydantic>=2
+pydantic-extra-types>=2
