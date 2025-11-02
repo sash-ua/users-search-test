@@ -13,3 +13,5 @@ node_modules
 
 .codex
 
+# Python cache directories
+**/__pycache__/

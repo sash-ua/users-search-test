@@ -142,6 +142,9 @@ OPENAI_BASE_URL=https://api.openai.com/v1
 
 **Note**: Backend loads `.env` and `.env.[NODE_ENV]` via `@nestjs/config`. Python CLI loads `.env` via `python-dotenv`.
 
+#### Local embeddings servers
+If you use a self‑hosted OpenAI‑compatible endpoint (e.g. `http://127.0.0.1:1234/v1`), set `OPENAI_BASE_URL` accordingly and use a model that endpoint provides (e.g. `text-embedding-mxbai-embed-large-v1`). When running through the NestJS backend, add the same `OPENAI_API_KEY` (dummy is fine for most local servers) and `OPENAI_BASE_URL` to `back-end/.env` so the spawned Python process inherits them. Forgetting this typically manifests as HTTP 500 errors on `/search`.
+
 ## Installation and Setup
 
 ### 1. Clone Repository
