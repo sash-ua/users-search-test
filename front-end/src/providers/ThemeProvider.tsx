@@ -17,16 +17,14 @@ const ThemeModeContext = createContext<ThemeModeContextType>({
 
 export const useThemeMode = () => useContext(ThemeModeContext);
 
-export function ThemeProvider({children}: {children: ReactNode}) {
+export function ThemeProvider({children, initialMode}: {children: ReactNode; initialMode?: ThemeMode}) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)', {noSsr: true});
-    const [themeMode, setThemeModeState] = useState<ThemeMode>(ThemeMode.Auto);
-    const [mounted, setMounted] = useState(false);
+    const [themeMode, setThemeModeState] = useState<ThemeMode>(initialMode ?? ThemeMode.Auto);
 
     useEffect(() => {
-        setMounted(true);
         const urlMode = searchParams?.get('themeMode');
         if (urlMode && Object.values(ThemeMode).includes(urlMode as ThemeMode)) {
             setThemeModeState(urlMode as ThemeMode);

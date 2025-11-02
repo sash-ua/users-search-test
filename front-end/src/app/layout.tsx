@@ -1,6 +1,6 @@
 import type {Metadata} from 'next';
 import {Suspense} from 'react';
-import {ThemeProvider} from '../providers/ThemeProvider';
+import {ThemeServerProvider} from '../providers/ThemeServerProvider';
 import Loading from '../components/Loading';
 
 export const metadata: Metadata = {
@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
     return (
         <html lang="en">
-            <body>
+            <body suppressHydrationWarning>
                 <Suspense fallback={<Loading />}>
-                    <ThemeProvider>{children}</ThemeProvider>
+                    <ThemeServerProvider>{children}</ThemeServerProvider>
                 </Suspense>
             </body>
         </html>

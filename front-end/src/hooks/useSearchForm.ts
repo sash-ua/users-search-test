@@ -19,7 +19,10 @@ export type SearchResponse = {
     reindexed?: boolean;
 };
 
-const BACKEND_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}${process.env.NEXT_PUBLIC_APP_PORT}`;
+// Build backend URL robustly with sensible defaults
+const BACKEND_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:';
+const BACKEND_PORT = process.env.NEXT_PUBLIC_APP_PORT || '3001';
+const BACKEND_URL = `${BACKEND_BASE}${BACKEND_PORT}`;
 
 export function useSearchForm() {
     const [query, setQuery] = useState('');

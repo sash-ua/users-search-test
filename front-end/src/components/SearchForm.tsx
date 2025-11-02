@@ -55,16 +55,27 @@ export function SearchForm({
         <Paper component="form" onSubmit={onSubmit} sx={{p: {xs: 2, sm: 3}}}>
             <Stack spacing={3}>
                 <TextField
+                    id="query-input"
+                    name="query"
                     label="Query"
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     placeholder="e.g. bicycle"
+                    autoComplete="off"
+                    spellCheck={false}
+                    inputProps={{
+                        'data-gramm': 'false',
+                        'data-enable-grammarly': 'false',
+                        'aria-autocomplete': 'none',
+                    }}
                     fullWidth
                     required
                 />
 
                 <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
                     <TextField
+                        id="top-k"
+                        name="k"
                         label="Top K"
                         type="number"
                         value={k}
@@ -73,17 +84,29 @@ export function SearchForm({
                             setK(Number.isFinite(value) && value >= 1 ? value : 1);
                         }}
                         inputProps={{min: 1}}
+                        autoComplete="off"
                         fullWidth
                     />
                     <TextField
+                        id="threshold"
+                        name="threshold"
                         label="Threshold"
                         type="number"
                         value={threshold}
                         onChange={(event) => setThreshold(event.target.value)}
                         placeholder="optional"
+                        autoComplete="off"
                         fullWidth
                     />
-                    <TextField label="Model" value={model} onChange={(event) => setModel(event.target.value)} fullWidth />
+                    <TextField
+                        id="model"
+                        name="model"
+                        label="Model"
+                        value={model}
+                        onChange={(event) => setModel(event.target.value)}
+                        autoComplete="off"
+                        fullWidth
+                    />
                 </Stack>
 
                 <FormGroup row>

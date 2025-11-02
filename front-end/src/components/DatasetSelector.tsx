@@ -72,10 +72,15 @@ export function DatasetSelector({
                     </Typography>
                 </Stack>
                 <TextField
+                    id="upload-name"
+                    name="uploadName"
                     label="Upload name"
                     value={uploadName}
                     onChange={(event) => setUploadName(event.target.value)}
                     helperText="Optional override for the stored filename"
+                    autoComplete="off"
+                    spellCheck={false}
+                    inputProps={{'data-gramm': 'false', 'data-enable-grammarly': 'false'}}
                     disabled={!file}
                 />
             </Stack>

@@ -73,6 +73,8 @@ export function ChunkingOptions({
                     {chunkingMode === 'sentence' ? (
                         <>
                             <TextField
+                                id="sentences-per-chunk"
+                                name="sentencesPerChunk"
                                 label="Sentences per chunk"
                                 type="number"
                                 value={sentencesPerChunk}
@@ -81,10 +83,13 @@ export function ChunkingOptions({
                                     setSentencesPerChunk(Number.isFinite(value) && value >= 1 ? value : 1);
                                 }}
                                 inputProps={{min: 1}}
+                                autoComplete="off"
                                 disabled={!indexChunks}
                                 sx={{flex: 1}}
                             />
                             <TextField
+                                id="sentence-overlap"
+                                name="sentenceOverlap"
                                 label="Sentence overlap"
                                 type="number"
                                 value={sentenceOverlap}
@@ -93,6 +98,7 @@ export function ChunkingOptions({
                                     setSentenceOverlap(Number.isFinite(value) && value >= 0 ? value : 0);
                                 }}
                                 inputProps={{min: 0}}
+                                autoComplete="off"
                                 disabled={!indexChunks}
                                 sx={{flex: 1}}
                             />
@@ -100,6 +106,8 @@ export function ChunkingOptions({
                     ) : (
                         <>
                             <TextField
+                                id="tokens-per-chunk"
+                                name="tokensPerChunk"
                                 label="Tokens per chunk"
                                 type="number"
                                 value={tokensPerChunk}
@@ -108,10 +116,13 @@ export function ChunkingOptions({
                                     setTokensPerChunk(Number.isFinite(value) && value >= 10 ? value : 10);
                                 }}
                                 inputProps={{min: 10}}
+                                autoComplete="off"
                                 disabled={!indexChunks}
                                 sx={{flex: 1}}
                             />
                             <TextField
+                                id="token-overlap"
+                                name="tokenOverlap"
                                 label="Token overlap"
                                 type="number"
                                 value={tokenOverlap}
@@ -120,6 +131,7 @@ export function ChunkingOptions({
                                     setTokenOverlap(Number.isFinite(value) && value >= 0 ? value : 0);
                                 }}
                                 inputProps={{min: 0}}
+                                autoComplete="off"
                                 disabled={!indexChunks}
                                 sx={{flex: 1}}
                             />
@@ -127,6 +139,8 @@ export function ChunkingOptions({
                     )}
                 </Stack>
                 <TextField
+                    id="chunk-query-multiplier"
+                    name="chunkQueryMultiplier"
                     label="Query multiplier"
                     type="number"
                     value={chunkQueryMultiplier}
@@ -135,6 +149,7 @@ export function ChunkingOptions({
                         setChunkQueryMultiplier(Number.isFinite(value) && value >= 1 ? value : 1);
                     }}
                     inputProps={{min: 1}}
+                    autoComplete="off"
                     disabled={!indexChunks}
                     fullWidth
                 />
