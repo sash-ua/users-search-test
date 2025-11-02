@@ -24,24 +24,28 @@ export function SearchResults({result}: SearchResultsProps) {
         });
     };
 
+    // Defensive guards: tolerate partial or malformed payloads
+    const rows = Array.isArray((result as any)?.rows) ? result.rows : [];
+    const safeCount = typeof result?.count === 'number' ? result.count : rows.length;
+
     return (
         <Paper variant="outlined" sx={{p: {xs: 2, sm: 3}}}>
             <Stack spacing={2}>
                 <Typography variant="h5" component="h2">
-                    Results ({result.count})
+                    Results ({safeCount})
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Collection: {result.collection || 'n/a'} | Space: {result.space || 'n/a'} | Model:{' '}
-                    {result.model || 'n/a'}
+                    Collection: {result?.collection || 'n/a'} | Space: {result?.space || 'n/a'} | Model:{' '}
+                    {result?.model || 'n/a'}
                 </Typography>
-                {result.reindexed && (
+                {result?.reindexed && (
                     <Alert severity="warning" variant="outlined">
                         Reindexed collection due to changed chunking/model settings.
                     </Alert>
                 )}
 
                 <Stack spacing={1.5}>
-                    {result.rows.map((row) => {
+                    {rows.map((row) => {
                         const fullName = [row.metadata?.first_name, row.metadata?.last_name]
                             .filter(Boolean)
                             .join(' ');
@@ -58,6 +62,7 @@ export function SearchResults({result}: SearchResultsProps) {
                                     '&:hover': {
                                         bgcolor: 'action.hover',
                                     },
+                                    minHeight: 145
                                 }}
                             >
                                 <Stack spacing={1}>
@@ -87,7 +92,7 @@ export function SearchResults({result}: SearchResultsProps) {
                                         </IconButton>
                                     </Box>
                                     <Typography variant="body2" color="text.secondary">
-                                        dist {row.distance.toFixed(6)}
+                                        dist {Number.isFinite(row.distance) ? row.distance.toFixed(6) : String(row.distance)}
                                         {typeof row.chunk_index === 'number' &&
                                         typeof row.chunk_count === 'number' ? (
                                             <Box component="span" sx={{ml: 0.5}}>
@@ -101,7 +106,7 @@ export function SearchResults({result}: SearchResultsProps) {
                                         </Typography>
                                     )}
                                     <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-                                        <Box sx={{mt: 1, pt: 1, borderTop: 1, borderColor: 'divider', cursor: 'default',}}>
+                                        <Box sx={{mt: 1, pt: 1, cursor: 'default',}}>
                                             {chunkText && (
                                                 <Typography variant="body2" color="text.primary">
                                                     {chunkText}

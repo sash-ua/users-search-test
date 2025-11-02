@@ -75,9 +75,26 @@ export default function Home() {
                 body: JSON.stringify(payload),
             });
 
-            const json = await response.json();
+            // Robust error handling: surface JSON {error} or plain text, never break UI
+            if (!response.ok) {
+                let msg: string | undefined;
+                try {
+                    const errJson = await response.clone().json();
+                    msg = (errJson as {error?: string; message?: string}).error ||
+                        (errJson as {message?: string}).message || undefined;
+                } catch {}
+                const text = await response.text().catch(() => '');
+                throw new Error(msg || text || response.statusText || 'Request failed');
+            }
+
+            const json = await response.json().catch(() => ({}));
             if ((json as {error?: string}).error) throw new Error((json as {error: string}).error);
-            setResult(json);
+            // Only set result when shape looks right to avoid downstream crashes
+            if (json && Array.isArray((json as any).rows)) {
+                setResult(json);
+            } else {
+                throw new Error('Unexpected response from server');
+            }
         } catch (err) {
             const message = err instanceof Error ? err.message : 'Request failed';
             setError(message);
